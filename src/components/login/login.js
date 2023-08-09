@@ -54,11 +54,14 @@ export const Login = () => {
         password:data.password
       })
 
-      if(result.data && result.data.data){
+      if(result.status == 200){
         setloading(false)
         const token =result.data.data.auth_token;
+        const Pnrnumber = result.data.data.pnrnumber;
+        console.log(Pnrnumber)
+        localStorage.setItem("Pnrnumber",Pnrnumber)
         localStorage.setItem("token",token)
-        
+        console.log(result.data)
         navigate(`${result.data.data.redirect}`)
       }else{
         setloading(false)

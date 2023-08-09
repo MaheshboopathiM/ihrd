@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/esm/Container';
 import Deparments from '../Students/addProfile/deparments';
 import AddProfileTEacher from '../Teachers/addProfile/addProfileTEacher';
+import { useParams } from 'react-router-dom';
 
 
 function Selectteacherorstudent() {
+
+    const { usertype } = useParams();
 
     const [Teacher, setTeacher] = useState(false);
     const [Students, setStudents] = useState(false);
@@ -16,6 +19,11 @@ function Selectteacherorstudent() {
         setStudents(false);
     }
 
+    useEffect(()=>{
+        if(usertype === 'medium'){
+            setStudents(true);
+        }
+    },[usertype])
     return (
         <>
             {Teacher || Students ||
@@ -37,7 +45,7 @@ function Selectteacherorstudent() {
 
             {Teacher &&
                 <>
-                <AddProfileTEacher msg={navigationProfile}/>
+                <AddProfileTEacher msg={navigationProfile} detail={false}/>
                 </>
             }
             {Students &&

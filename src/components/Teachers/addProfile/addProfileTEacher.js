@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -11,8 +11,9 @@ import Spinner from 'react-bootstrap/Spinner';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 
-function AddProfileTEacher({ msg }) {
+function AddProfileTEacher({ msg, detail,close,handleTeacher }) {
 
+    let role = detail ? 0 : 1;
     const [responseerror, setresponseerror] = useState('');
     const [sucessmessage, setsucessmessage] = useState('');
     const [load, setload] = useState(false);
@@ -75,6 +76,8 @@ function AddProfileTEacher({ msg }) {
     }
 
     const handlesubmit = (e) => {
+
+        let idfrom = detail && detail[0].id;
         e.preventDefault();
         if (isValid()) {
             setShow(false);
@@ -82,13 +85,19 @@ function AddProfileTEacher({ msg }) {
             setload(true);
             axios.post(
                 `${BASEURL}/admin/new/teacher/add`, {
+                id: idfrom,
                 first_name: data.first_name,
                 last_name: data.last_name,
                 email_id: data.email_id,
                 join_date: data.join_date,
+                role: role,
             }).then((res) => {
                 setload(false);
                 if (res.status == 200) {
+                    if(detail){
+                        handleTeacher();
+                        setTimeout(close, 3000);
+                    }
                     setShowsucess(true);
                     setsucessmessage(res.data.data.message)
                     setdata({
@@ -109,6 +118,17 @@ function AddProfileTEacher({ msg }) {
         }
     }
 
+    useEffect(() => {
+        if (detail) {
+            setdata({
+                ...data,
+                first_name: detail[0].first_name,
+                last_name: detail[0].last_name,
+                email_id: detail[0].email_id,
+                // join_date: dateformat(new Date(detail[0].joined_date)),
+            })
+        }
+    }, [])
     return (
         <>
             {/* email already error showing */}
@@ -152,7 +172,7 @@ function AddProfileTEacher({ msg }) {
 
             <Container style={{ width: '80%' }}>
                 <Card className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}>
-                    <Card.Header>ADD TEACHER</Card.Header>
+                    <Card.Header>{detail ? "EDIT" : "ADD"}{" "}TEACHER DETAILS</Card.Header>
                     <form
                         style={{ display: "flex", justifyContent: "center", alignItems: 'center', width: "70%" }}
                         onSubmit={handlesubmit}
@@ -161,7 +181,7 @@ function AddProfileTEacher({ msg }) {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                                 <Form.Control
-                                    placeholder="Enter Student First Name"
+                                    placeholder="Enter Teacher First Name"
                                     aria-label="First Name"
                                     aria-describedby="basic-addon1"
                                     value={data.first_name}
@@ -176,7 +196,7 @@ function AddProfileTEacher({ msg }) {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                                 <Form.Control
-                                    placeholder="Enter Student Last Name"
+                                    placeholder="Enter Teacher Last Name"
                                     aria-label="Last Name"
                                     aria-describedby="basic-addon1"
                                     value={data.last_name}
@@ -192,7 +212,7 @@ function AddProfileTEacher({ msg }) {
 
                             <InputGroup className="mb-3">
                                 <Form.Control
-                                    placeholder="Enter Student Email ID"
+                                    placeholder="Enter Teacher Email ID"
                                     aria-label="Email"
                                     aria-describedby="basic-addon2"
                                     value={data.email_id}
@@ -219,6 +239,11 @@ function AddProfileTEacher({ msg }) {
                                 />
                             </InputGroup>
 
+                            {detail &&
+                                <div class="alert alert-info" role="alert" style={{ padding: '5px', fontWeight: '500' }}>
+                                   Prev Join Date (mm/dd/yyyy) {" "}{new Date(detail[0].joined_date).toLocaleDateString()}
+                                </div>
+                            }
                             {erro.join_dateerror &&
                                 <div class="alert alert-danger" role="alert" style={{ padding: '5px', fontWeight: '500' }}>
                                     {erro.join_dateerror}
@@ -230,11 +255,13 @@ function AddProfileTEacher({ msg }) {
                         </Card.Body>
                     </form>
 
-                    <Card.Footer className="text-muted">
-                        <Button variant='info' onClick={msg} style={{ marginLeft: '20px' }}>
-                            <BsArrowLeftCircleFill /> PROFILE SELECT
-                        </Button>
-                    </Card.Footer>
+                    {!detail &&
+                        <Card.Footer className="text-muted">
+                            <Button variant='info' onClick={msg} style={{ marginLeft: '20px' }}>
+                                <BsArrowLeftCircleFill /> PROFILE SELECT
+                            </Button>
+                        </Card.Footer>
+                    }
                 </Card>
             </Container >
         </>

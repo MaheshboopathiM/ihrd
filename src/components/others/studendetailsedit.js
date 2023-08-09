@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from 'react-bootstrap/esm/Container';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -9,26 +9,25 @@ import axios from 'axios';
 import ToastContainer from 'react-bootstrap/esm/ToastContainer';
 import Toast from 'react-bootstrap/Toast';
 import Spinner from 'react-bootstrap/Spinner';
-import { BASEURL } from '../../../../BaseUrl/Baseurl';
+import { BASEURL } from '../../BaseUrl/Baseurl';
 
-function FirstYear({ msg }) {
-    
-    const [responseerror, setresponseerror] = useState('');
-    const [sucessmessage, setsucessmessage] = useState('');
+
+function Studendetailsedit({ detail,close, handleMsc, handleBsc, handleBcom }) {
+
     const [load, setload] = useState(false);
     const [show, setShow] = useState(false);
     const [showsucess, setShowsucess] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [sucessmessage, setsucessmessage] = useState('');
     const [data, setdata] = useState({
+        user_id:'',
         first_name: '',
         last_name: '',
         prn: '',
         email_id: '',
         semester: '',
         join_date: '',
-        deparment: 'BCOM(CA)',
-        year: '1',
+        deparment: '',
+        year: '',
     });
 
     const [erro, seterror] = useState({
@@ -38,8 +37,8 @@ function FirstYear({ msg }) {
         emailerror: '',
         semester_error: '',
         join_dateerror: '',
+        year: ''
     })
-
 
     const onChangeEmail = (e) => {
         let email = e.target.value;
@@ -71,6 +70,9 @@ function FirstYear({ msg }) {
         } else if (regex.test(data.email_id) === false) {
             seterror({ ...erro, emailerror: "Email is not valid" });
             return isValid;
+        } else if (data.year === "") {
+            seterror({ ...erro, year: "Year Not be Empty" })
+            return isValid;
         } else if (data.semester === "") {
             seterror({ ...erro, semester_error: "Semester Not be Empty" })
             return isValid;
@@ -84,34 +86,35 @@ function FirstYear({ msg }) {
     }
 
 
+    
     const handlesubmit = (e) => {
         e.preventDefault();
         if (isValid()) {
             setShow(false);
             setShowsucess(false);
             setload(true);
-            axios.post(
-                `${BASEURL}/admin/new/student/add`,data).then((res) => {
+            axios.put(
+                `${BASEURL}/admin/students/edit`,data).then((res) => {
                 setload(false);
                 if (res.status == 200) {
-                    window.scrollTo(0,0);
+                    if(detail){
+                        if(res.data.data.message.deparment === "BSC(CS)"){
+                            handleBsc();
+                        }else if(res.data.data.message.deparment === "MSC(CS)"){
+                            handleMsc();
+                        }else{
+                            handleBcom();
+                        }
+                        setTimeout(close, 3000);
+                    }
                     setShowsucess(true);
                     setsucessmessage(res.data.data.message)
                     setdata({
                         first_name: '',
                         last_name: '',
-                        prn: '',
                         email_id: '',
-                        semester: '',
                         join_date: '',
-                        deparment: 'BCOM(CA)',
-                        year: '1',
                     });
-                }
-                if (res.status == 201) {
-                    window.scrollTo(0,0);
-                    handleShow();
-                    setresponseerror(res.data.data.message)
                 }
             })
                 .catch((err) => {
@@ -119,27 +122,28 @@ function FirstYear({ msg }) {
                 })
         }
     }
+
+    useEffect(() => {
+        console.log(detail)
+        if (detail) {
+            setdata({
+                ...data,
+                user_id: detail[0].user_id,
+                first_name: detail[0].first_name,
+                last_name: detail[0].last_name,
+                prn: detail[0].prnnumber,
+                email_id: detail[0].email_id,
+                semester: detail[0].semester,
+                deparment: detail[0].deparment,
+                year: detail[0].year,
+                join_date:new Date(`${detail[0].joined_date}`).toISOString().slice(0, 10),
+            })
+        }
+    }, [])
     return (
         <>
-
-         {/* email already error showing */}
-         <ToastContainer position="top-center" className="p-3" style={{ zIndex: 1 }}>
-                <Toast show={show} onClose={handleClose}>
-                    <Toast.Header>
-                        <img
-                            src="holder.js/20x20?text=%20"
-                            className="rounded me-2"
-                            alt=""
-                        />
-                        <strong className="me-auto" style={{ color: 'red' }}>Email Exist!</strong>
-                        <small className="text-muted">just now</small>
-                    </Toast.Header>
-                    <Toast.Body><strong style={{ color: 'red' }} className="me-auto">{responseerror}</strong></Toast.Body>
-                </Toast>
-            </ToastContainer>
-
-            {/* Student add Sucess message*/}
-            <ToastContainer position="top-center" className="p-3" style={{ zIndex: 1 }}>
+        {/* Student Edit Sucess message*/}
+        <ToastContainer position="top-center" className="p-3" style={{ zIndex: 1 }}>
                 <Toast show={showsucess} onClose={() => setShowsucess(false)}>
                     <Toast.Header>
                         <img
@@ -161,7 +165,7 @@ function FirstYear({ msg }) {
                 </Toast>
             </ToastContainer>
 
-            <Container style={{ width: '80%' }}>
+            <Container style={{ width: '80%', marginTop:"10px" }}>
                 <Card className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}>
                     <Card.Header>ADD BCOM(CA) FIRST YEAR STUDENT</Card.Header>
                     <form style={{ display: "flex", justifyContent: "center", alignItems: 'center', width: "70%" }}
@@ -225,7 +229,7 @@ function FirstYear({ msg }) {
                                     aria-label="Email"
                                     aria-describedby="basic-addon2"
                                     value={data.email_id}
-                                    onChange={onChangeEmail}
+                                    // onChange={onChangeEmail}
                                 />
                                 <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
                             </InputGroup>
@@ -237,12 +241,46 @@ function FirstYear({ msg }) {
                             }
 
                             <Form.Select aria-label="Default select example" style={{ marginBottom: '10px' }}
-                             onChange={(e) => setdata({ ...data, semester: e.target.value })}
-                             >
-                                <option value="">Select Semester</option>
-                                <option value="1">First Semester</option>
-                                <option value="2">Second Semester</option>
+                                value={data.year} onChange={(e) => setdata({ ...data, year: e.target.value })}
+                            >
+                                <option value="">Select Year</option>
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
                             </Form.Select>
+
+                            {erro.year &&
+                                <div className="alert alert-danger" role="alert" style={{ padding: '5px', fontWeight: '500' }}>
+                                    {erro.year}
+                                </div>
+                            }
+                            {data.year == 1 &&
+                                <Form.Select aria-label="Default select example" style={{ marginBottom: '10px' }}
+                                    value={data.semester} onChange={(e) => setdata({ ...data, semester: e.target.value })}
+                                >
+                                    <option value="">Select Semester</option>
+                                    <option value="1">First Semester</option>
+                                    <option value="2">Second Semester</option>
+                                </Form.Select>
+                            }
+                            {data.year == 2 &&
+                                <Form.Select aria-label="Default select example" style={{ marginBottom: '10px' }}
+                                    value={data.semester} onChange={(e) => setdata({ ...data, semester: e.target.value })}
+                                >
+                                    <option value="">Select Semester</option>
+                                    <option value="3">Third Semester</option>
+                                    <option value="4">Fourth Semester</option>
+                                </Form.Select>
+                            }
+                            {data.year == 3 &&
+                                <Form.Select aria-label="Default select example" style={{ marginBottom: '10px' }}
+                                    value={data.semester} onChange={(e) => setdata({ ...data, semester: e.target.value })}
+                                >
+                                    <option value="5">Fifth Semester</option>
+                                    <option value="6">Sixth Semester</option>
+                                </Form.Select>
+                            }
+
 
                             {erro.semester_error &&
                                 <div className="alert alert-danger" role="alert" style={{ padding: '5px', fontWeight: '500' }}>
@@ -274,17 +312,7 @@ function FirstYear({ msg }) {
                                     placeholder=""
                                     aria-label=""
                                     aria-describedby="basic-addon1"
-                                    value={"BCOM(CA)"}
-                                />
-                            </InputGroup>
-
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text id="basic-addon1">YEAR</InputGroup.Text>
-                                <Form.Control
-                                    placeholder=""
-                                    aria-label=""
-                                    aria-describedby="basic-addon1"
-                                    value={"First Year"}
+                                    value={data.deparment}
                                 />
                             </InputGroup>
 
@@ -292,16 +320,10 @@ function FirstYear({ msg }) {
 
                         </Card.Body>
                     </form>
-
-                    <Card.Footer className="text-muted">
-                        <Button variant='info' onClick={msg} style={{ marginLeft: '20px' }}>
-                            <BsArrowLeftCircleFill /> YEAR SELECT
-                        </Button>
-                    </Card.Footer>
                 </Card>
             </Container >
         </>
     )
 }
 
-export default FirstYear
+export default Studendetailsedit;

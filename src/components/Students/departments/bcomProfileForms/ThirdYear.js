@@ -27,7 +27,7 @@ function ThirdYear({ msg }) {
         email_id: '',
         semester: '',
         join_date: '',
-        deparment: 'BCOM(CS)',
+        deparment: 'BCOM(CA)',
         year: '3',
     });
 
@@ -104,7 +104,7 @@ function ThirdYear({ msg }) {
                             email_id: '',
                             semester: '',
                             join_date: '',
-                            deparment: 'BCOM(CS)',
+                            deparment: 'BCOM(CA)',
                             year: '3',
                         });
                     }

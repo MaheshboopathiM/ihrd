@@ -27,7 +27,7 @@ function SecondYear({ msg }) {
         email_id: '',
         semester: '',
         join_date: '',
-        deparment: 'BCOM(CS)',
+        deparment: 'BCOM(CA)',
         year: '2',
     });
 
@@ -104,7 +104,7 @@ function SecondYear({ msg }) {
                             email_id: '',
                             semester: '',
                             join_date: '',
-                            deparment: 'BCOM(CS)',
+                            deparment: 'BCOM(CA)',
                             year: '2',
                         });
                     }

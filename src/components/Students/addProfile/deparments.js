@@ -7,15 +7,18 @@ import { BsArrowLeftCircleFill } from "react-icons/bs";
 import MSCComponent from '../departments/MSC';
 import BSCComponent from '../departments/BSC';
 import BCOMComponent from '../departments/BCOM';
+import { useParams } from 'react-router-dom';
 
 function Deparments({ msg }) {
+
+    const { usertype } = useParams();
 
     const [MSC, setMSC] = useState(false);
     const [BSC, setBSC] = useState(false);
     const [BCOM, setBCOM] = useState(false);
 
 
-    const navigationDeparments = () =>{
+    const navigationDeparments = () => {
         setBCOM(false);
         setBSC(false);
         setMSC(false);
@@ -36,11 +39,13 @@ function Deparments({ msg }) {
                             <Button variant='primary' onClick={() => setBSC(!BSC)} style={{ marginLeft: '20px' }}>BSC(CS)</Button>
                             <Button variant='primary' onClick={() => setBCOM(!BCOM)} style={{ marginLeft: '20px' }}>BCOM(CA)</Button>
                         </Card.Body>
-                        <Card.Footer className="text-muted">
-                            <Button variant='info' onClick={msg} style={{ marginLeft: '20px' }}>
-                                <BsArrowLeftCircleFill /> PROFILE SELECT
-                            </Button>
-                        </Card.Footer>
+                        {usertype === 'hard' &&
+                            <Card.Footer className="text-muted">
+                                <Button variant='info' onClick={msg} style={{ marginLeft: '20px' }}>
+                                    <BsArrowLeftCircleFill /> PROFILE SELECT
+                                </Button>
+                            </Card.Footer>
+                        }
                     </Card>
                 </Container>
 
@@ -51,14 +56,14 @@ function Deparments({ msg }) {
                 </>
             }
             {BSC &&
-               <>
-               <BSCComponent msg={navigationDeparments}/>
-               </>
+                <>
+                    <BSCComponent msg={navigationDeparments} />
+                </>
             }
             {BCOM &&
-            <>
-            <BCOMComponent msg={navigationDeparments}/>
-            </>
+                <>
+                    <BCOMComponent msg={navigationDeparments} />
+                </>
             }
         </>
     )
