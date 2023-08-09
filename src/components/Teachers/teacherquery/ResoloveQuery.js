@@ -46,9 +46,10 @@ function ResoloveQuery() {
     }
 
 
-    const handleDelete = () => {
+    const handleDelete = async() => {
         if (usertype === 'low') {
-            if (confirm("Are You want Delete this Query") == true) {
+            const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
+            if (confirmed) {
                 axios.delete(`${BASEURL}/Student/Query/Delete/${Qeryone.id}`)
                     .then((res) => {
                         if (res.status == 200) {
@@ -65,7 +66,8 @@ function ResoloveQuery() {
                 return false;
             }
         } else if (usertype === 'medium') {
-            if (confirm("Are You want Delete this Query") == true) {
+            const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
+            if (confirmed) {
                 axios.delete(`${BASEURL}/Teacher/Query/Delete/${Qeryone.id}`)
                     .then((res) => {
                         if (res.status == 200) {
@@ -83,6 +85,13 @@ function ResoloveQuery() {
             }
         }
     }
+
+    const showConfirmDialog = (message) => {
+        return new Promise((resolve) => {
+            const confirmed = window.confirm(message);
+            resolve(confirmed);
+        });
+    };
 
     useEffect(() => {
         const token = localStorage.getItem("token");

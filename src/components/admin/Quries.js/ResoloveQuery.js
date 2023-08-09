@@ -46,43 +46,45 @@ function ResoloveQuery() {
     }
 
 
-    const handleDelete = () => {
-        if (usertype === 'low') {
-            if (confirm("Are You want Delete this Query") == true) {
-                axios.delete(`${BASEURL}/Student/Query/Delete/${Qeryone.id}`)
-                    .then((res) => {
-                        if (res.status == 200) {
-                            setQueryone('');
-                            const token = localStorage.getItem("token");
-                            const decoded = jwt_decode(token, { complete: true });
-                            handleQueryget(decoded.user_id);
-                            alert(res.data.data.msg);
-                        } else if (res.status == 201) {
-                            alert(res.data.data.msg);
-                        }
-                    })
-            } else {
-                return false;
-            }
-        } else if (usertype === 'medium') {
-            if ( confirm("Are You want Delete this Query") == true) {
-                axios.delete(`${BASEURL}/Teacher/Query/Delete/${Qeryone.id}`)
-                    .then((res) => {
-                        if (res.status == 200) {
-                            setQueryone('');
-                            const token = localStorage.getItem("token");
-                            const decoded = jwt_decode(token, { complete: true });
-                            handleQueryget(decoded.user_id);
-                            alert(res.data.data.msg);
-                        } else if (res.status == 201) {
-                            alert(res.data.data.msg);
-                        }
-                    })
-            } else {
-                return false;
-            }
-        }
-    }
+    // const handleDelete = async () => {
+    //     if (usertype === 'low') {
+    //         const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
+    //         if (confirmed) {
+    //             axios.delete(`${BASEURL}/Student/Query/Delete/${Qeryone.id}`)
+    //                 .then((res) => {
+    //                     if (res.status == 200) {
+    //                         setQueryone('');
+    //                         const token = localStorage.getItem("token");
+    //                         const decoded = jwt_decode(token, { complete: true });
+    //                         handleQueryget(decoded.user_id);
+    //                         alert(res.data.data.msg);
+    //                     } else if (res.status == 201) {
+    //                         alert(res.data.data.msg);
+    //                     }
+    //                 })
+    //         } else {
+    //             return false;
+    //         }
+    //     } else if (usertype === 'medium') {
+    //         const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
+    //         if (confirmed) {
+    //             axios.delete(`${BASEURL}/Teacher/Query/Delete/${Qeryone.id}`)
+    //                 .then((res) => {
+    //                     if (res.status == 200) {
+    //                         setQueryone('');
+    //                         const token = localStorage.getItem("token");
+    //                         const decoded = jwt_decode(token, { complete: true });
+    //                         handleQueryget(decoded.user_id);
+    //                         alert(res.data.data.msg);
+    //                     } else if (res.status == 201) {
+    //                         alert(res.data.data.msg);
+    //                     }
+    //                 })
+    //         } else {
+    //             return false;
+    //         }
+    //     }
+    // }
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -125,7 +127,7 @@ function ResoloveQuery() {
                                     <>
                                         <div className='d-flex col-12 justify-content-end align-items-center mb-1'>
                                             <button type="button" class="btn btn-primary btn-sm  me-2" onClick={() => setshow(!show)}>{show ? "See your Query" : "See Admin Query"}{" "}<MDBIcon fas icon="book-open" /></button>
-                                            <button type="button" class="btn btn-danger btn-sm me-2" onClick={handleDelete}>Delete <MDBIcon fas icon="trash" /></button>
+                                            <button type="button" class="btn btn-danger btn-sm me-2" >Delete <MDBIcon fas icon="trash" /></button>
                                         </div>
                                         <div class="form-floating mb-2 d-inline d-flex col-12 justify-content-center align-items-center">
                                             <input
