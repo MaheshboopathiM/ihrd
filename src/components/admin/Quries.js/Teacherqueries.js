@@ -46,13 +46,13 @@ function Teacherqueries() {
 
 
             {showM &&
-                <ResoloveQuery />
+                <ResoloveQuery role={1}/>
             }
             {showB &&
-                <PendingQuery />
+                <PendingQuery role={1}/>
             }
             {showC &&
-                <RejectQuery />
+                <RejectQuery role={1}/>
             }
         </>
     )

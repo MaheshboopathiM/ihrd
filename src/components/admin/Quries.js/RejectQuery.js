@@ -7,36 +7,37 @@ import { useParams } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
 import { MDBIcon } from 'mdb-react-ui-kit';
 
-function RejectQuery() {
+function RejectQuery({role}) {
 
     const { usertype } = useParams();
 
+    const [permission, setpermission] = useState(role)
     const [QueryList, setQueryList] = useState([]);
     const [Qeryone, setQueryone] = useState('');
     const [show, setshow] = useState(false);
 
     const handleQueryget = (e) => {
-        if (usertype === 'low') {
-            axios.get(`${BASEURL}/Student/Query/Reject/${e}`)
+        if (permission == 0) {
+            axios.get(`${BASEURL}/Admin/Student/Query/Reject`)
                 .then((res) => {
                     setQueryList(res.data.data.result)
                 })
-        } else if (usertype === 'medium') {
-            axios.get(`${BASEURL}/Teacher/Query/Reject/${e}`)
-                .then((res) => {
-                    setQueryList(res.data.data.result)
-                })
+        } else if (permission == 1) {
+            axios.get(`${BASEURL}/Admin/Teacher/Query/Reject`)
+            .then((res) => {
+                setQueryList(res.data.data.result)
+            })
         }
     }
 
     const handleviewQuery = (e) => {
-        if (usertype === 'low') {
+        if (permission == 0) {
             axios.get(`${BASEURL}/Student/Query/induvitual/Reject/${e}`)
                 .then((res) => {
                     console.log("gdujfdhks")
                     setQueryone(res.data.data)
                 })
-        } else if (usertype === 'medium') {
+        } else if (permission == 1) {
             axios.get(`${BASEURL}/Teacher/Query/induvitual/Reject/${e}`)
                 .then((res) => {
                     console.log("gdujfdhks")
@@ -47,45 +48,35 @@ function RejectQuery() {
     }
 
 
-    // const handleDelete = async() => {
-    //     if (usertype === 'low') {
-    //         const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
-    //         if (confirmed) {
-    //             axios.delete(`${BASEURL}/Student/Query/Delete/${Qeryone.id}`)
-    //                 .then((res) => {
-    //                     if (res.status == 200) {
-    //                         setQueryone('');
-    //                         const token = localStorage.getItem("token");
-    //                         const decoded = jwt_decode(token, { complete: true });
-    //                         handleQueryget(decoded.user_id);
-    //                         alert(res.data.data.msg);
-    //                     } else if (res.status == 201) {
-    //                         alert(res.data.data.msg);
-    //                     }
-    //                 })
-    //         } else {
-    //             return false;
-    //         }
-    //     } else if (usertype === 'medium') {
-    //         const confirmed = await showConfirmDialog("Are you sure you want to delete this query?");
-    //         if (confirmed) {
-    //             axios.delete(`${BASEURL}/Teacher/Query/Delete/${Qeryone.id}`)
-    //                 .then((res) => {
-    //                     if (res.status == 200) {
-    //                         setQueryone('');
-    //                         const token = localStorage.getItem("token");
-    //                         const decoded = jwt_decode(token, { complete: true });
-    //                         handleQueryget(decoded.user_id);
-    //                         alert(res.data.data.msg);
-    //                     } else if (res.status == 201) {
-    //                         alert(res.data.data.msg);
-    //                     }
-    //                 })
-    //         } else {
-    //             return false;
-    //         }
-    //     }
-    // }
+    const handlePending = async(e) =>{
+        if(permission == 0){
+            const confirmed = await showConfirmDialog("Are you sure you want to Pending this query?");
+            if(confirmed){
+                axios.put(`${BASEURL}/Admin/Student/Query/pending/${Qeryone.id}`)
+                .then((res)=>{
+                    if(res.status == 200){
+                        handleQueryget();
+                        setshow(false);
+                        setQueryone('');
+                        alert(res.data.data.msg)
+                    }
+                })
+            }
+        }  else{
+            const confirmed = await showConfirmDialog("Are you sure you want to Pending this query?");
+            if(confirmed){
+                axios.put(`${BASEURL}/Admin/Teacher/Query/pending/${Qeryone.id}`)
+                .then((res)=>{
+                    if(res.status == 200){
+                        handleQueryget();
+                        setshow(false);
+                        setQueryone('');
+                        alert(res.data.data.msg)
+                    }
+                })
+            }
+        }
+    }
 
     const showConfirmDialog = (message) => {
         return new Promise((resolve) => {
@@ -112,9 +103,9 @@ function RejectQuery() {
 
                                     QueryList.map((data) => (
                                         <>
-                                            <div className='col-11 chatchild' style={{ position: 'relative' }} onClick={() => handleviewQuery(data.id)}>
+                                            <div className='col-11 chatchildadmin' style={{ position: 'relative' }} onClick={() => handleviewQuery(data.id)}>
                                                 <span className='spanone'>
-                                                    {data.description}
+                                                   {permission == 0 ? data.student_name : data.teacher_name } 
                                                 </span>
                                                 <span className='chatarrow'>
                                                     <MDBIcon fas icon="arrow-circle-right" />
@@ -134,8 +125,8 @@ function RejectQuery() {
                                 {Qeryone ?
                                     <>
                                         <div className='d-flex col-12 justify-content-end align-items-center mb-1'>
-                                            <button type="button" class="btn btn-primary btn-sm  me-2" onClick={() => setshow(!show)}>{show ? "See your Query" : "See Admin Query"}{" "}<MDBIcon fas icon="book-open" /></button>
-                                            <button type="button" class="btn btn-danger btn-sm me-2" >Delete <MDBIcon fas icon="trash" /></button>
+                                            <button type="button" class="btn btn-primary btn-sm  me-2" onClick={() => setshow(!show)}>{show ? "See Student Query" : "See Admin Query"}{" "}<MDBIcon fas icon="book-open" /></button>
+                                            <button type="button" class="btn btn-danger btn-sm me-2" onClick={()=>handlePending(Qeryone.id)}>Pending</button>
                                         </div>
                                         <div class="form-floating mb-2 d-inline d-flex col-12 justify-content-center align-items-center">
                                             <input
@@ -172,7 +163,7 @@ function RejectQuery() {
                                                     id="floatingTextarea"
                                                     readOnly
                                                 ></textarea>
-                                                <label for="floatingTextarea">Your Query</label>
+                                                <label for="floatingTextarea">Student Query</label>
                                             </div>
                                         }
 

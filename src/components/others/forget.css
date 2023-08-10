@@ -1,0 +1,356 @@
+/***** For Smartphones *******/
+.classnamefor{
+    background: black !important;
+    width: 100%;
+    height: 890px;
+    max-width: 100%;
+}
+.container-center {
+    position: absolute;
+    left: 50%;
+    width: 85%;
+    height: auto;
+    background-color: transparent;
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+    bottom: 50%;
+    -webkit-transform: translateX(-50%) translateY(50%);
+            transform: translateX(-50%) translateY(50%);
+  }
+  
+  .container-center h2, img {
+    text-align: center;
+    color: white;
+    font-weight: 10;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.3);
+  }
+  .container-center h4{
+    text-align: center;
+    color:black;
+    font-size: 1.1em;
+    font-family: times;
+    font-style:normal;
+    line-height: 130%;
+   opacity: .6;
+  }
+  
+  .container-center form {
+    width: 100%;
+    overflow: hidden;
+    background-color: #FEFEFE;
+    padding: 21px 13px;
+    border-radius: 21px;
+    -webkit-box-shadow: 0px 5px 34px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 5px 34px rgba(0, 0, 0, 0.1);
+  }
+  
+  .container-center formgroup {
+    position: relative;
+    width: 100%;
+    display: block;
+    margin: 1em 0;
+    font-size: 1em;
+  }
+  .container-center formgroup input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #888888;
+    padding: 8px 0;
+    font-size: inherit !important;
+    margin-bottom: 13px;
+    outline: none;
+    opacity: 0.7;
+    font-weight: 600;
+  }
+  .container-center formgroup input:focus {
+    opacity: 1;
+    border-bottom: 2px solid #F71442;
+    color: #F71442;
+  }
+  .container-center formgroup label {
+    position: absolute;
+    font-size: 0.8em;
+    top: -1em;
+    left: 0;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    opacity: 0.7;
+    color: #888888;
+    text-transform: uppercase;
+  }
+  .container-center formgroup span {
+    position: absolute;
+    top: -1em;
+    left: -500px;
+    opacity: 0;
+    color: #333333;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  .container-center formgroup input:focus + label {
+    left: 500px;
+    opacity: 0;
+  }
+  .container-center formgroup input:focus ~ span {
+    left: 0;
+    opacity: 1;
+  }
+  
+  .container-center .forgot {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 21px;
+    opacity: 0.8;
+  }
+  
+  .container-center #login-btn {
+    border: none;
+    color: #FEFEFE;
+    padding: 0.8em 0;
+    font-size: 1em;
+    font-weight: 300;
+    width: 100%;
+    border-radius: 55px;
+    -webkit-box-shadow: 0px 3px 21px rgba(255, 100, 0, 0.7);
+            box-shadow: 0px 3px 21px rgba(255, 100, 0, 0.7);
+    background: -webkit-gradient(linear, left top, right top, from(#F98340), to(#F71442));
+    background: linear-gradient(to right, #F98340, #F71442);
+    background-size: 100%;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+  }
+  
+  .container-center .social {
+    margin-top: 1.8em;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .container-center .social button {
+    width: 50%;
+    margin: 0 8px;
+    padding: 10px 0;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 34px;
+    -webkit-box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.2);
+            box-shadow: 0px 1px 13px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .container-center .social #facebook {
+    background: #1F4788;
+    background: -webkit-gradient(linear, left top, right top, from(#4B77BE), to(#1F4788));
+    background: linear-gradient(to right, #4B77BE, #1F4788);
+    background-size: 100%;
+  }
+  .container-center .social #google {
+    background: #FEFEFE;
+    background: -webkit-gradient(linear, left top, right top, from(#FEFEFE), to(#f1f1f1));
+    background: linear-gradient(to right, #FEFEFE, #f1f1f1);
+    background-size: 100%;
+    color: #F71442;
+  }
+  
+  .container-center p {
+    color: white;
+    text-align: center;
+  }
+  .container-center p a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  /***** For Tablets *******/
+  @media screen and (min-width: 480px) {
+    .container-center {
+      width: 70%;
+    }
+  
+    .container-center #login-btn {
+      padding: 0.8em 0;
+      font-size: 1.2em;
+    }
+  }
+  /***** For Desktop Monitors *******/
+  @media screen and (min-width: 768px) {
+    .container-center {
+      width: 500px;
+    }
+  }
+
+
+
+  /* otp page  */
+
+.height-100 {
+    height: 100vh
+}
+
+.card {
+    width: 400px;
+    border: none;
+    height: 300px;
+    box-shadow: 0px 5px 20px 0px #d2dae3;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.card h6 {
+    color: red;
+    font-size: 20px
+}
+
+.inputs input {
+    width: 40px;
+    height: 40px
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+.card-2 {
+    background-color: #fff;
+    padding: 10px;
+    width: 350px;
+    height: 100px;
+    bottom: -50px;
+    left: 20px;
+    position: absolute;
+    border-radius: 5px
+}
+
+.card-2 .content {
+    margin-top: 50px
+}
+
+.card-2 .content a {
+    color: red
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid red
+}
+
+.validate {
+    border-radius: 20px;
+    height: 40px;
+    background-color: red;
+    border: 1px solid red;
+    width: 140px
+}
+.resend{
+    align-self: flex-end;
+}
+
+
+/* new password  */
+.mainDiv {
+    display: flex;
+    min-height: 660px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    font-family: 'Open Sans', sans-serif;
+  }
+ .cardStyle {
+    width: 500px;
+    border-color: white;
+    background: #fff;
+    padding: 36px 0;
+    border-radius: 4px;
+    margin: 30px 0;
+    box-shadow: 0px 0 2px 0 rgba(0,0,0,0.25);
+  }
+#signupLogo {
+  max-height: 100px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+.formTitle{
+  font-weight: 600;
+  margin-top: 20px;
+  color: #2F2D3B;
+  text-align: center;
+}
+.inputLabel {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 6px;
+  margin-top: 24px;
+}
+  .inputDiv {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+input {
+  height: 40px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  border: solid 1px #ccc;
+  padding: 0 11px;
+}
+input:disabled {
+  cursor: not-allowed;
+  border: solid 1px #eee;
+}
+.buttonWrapper {
+  margin-top: 40px;
+}
+  .submitButton {
+    width: 70%;
+    height: 40px;
+    margin: auto;
+    display: block;
+    color: #fff;
+    background-color: #065492;
+    border-color: #065492;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.035);
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+.submitButton:disabled,
+button[disabled] {
+  border: 1px solid #cccccc;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+#loader {
+  position: absolute;
+  z-index: 1;
+  margin: -2px 0 0 10px;
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid #666666;
+  width: 14px;
+  height: 14px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

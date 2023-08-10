@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './login.css'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Login = () => {
 
@@ -91,7 +91,7 @@ export const Login = () => {
               </div>
               }
               <button class="login">{loading? 'Loading............' : 'Log in'}</button>
-              <a href="#">Forgot Password ?</a>
+              <Link to={'/forget'}>Forgot Password ?</Link>
             </form>
             <div className='row'>
             </div>

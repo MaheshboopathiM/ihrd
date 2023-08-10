@@ -22,6 +22,7 @@ import { BASEURL } from '../../BaseUrl/Baseurl.js';
 import axios from 'axios';
 import Studentqueries from '../../components/admin/Quries.js/Studentqueries.js';
 import Teacherqueries from '../../components/admin/Quries.js/Teacherqueries.js'
+import Homecomponent from '../../components/others/homecomponent.js';
 function Home() {
 
   const { usertype } = useParams();
@@ -118,7 +119,7 @@ function Home() {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <Tab eventKey="home" title="Home">
-                Tab content for Home
+              <Homecomponent/>
               </Tab>
               <Tab eventKey="profile" title="ADD PROFILES">
                 <Selectteacherorstudent />
@@ -147,31 +148,6 @@ function Home() {
           <header>
             <HeaderTeacher />
           </header>
-          {/* <section style={{ display: "flex", justifyContent: "center", marginBottom: "5px" }}  >
-            <OverlayTrigger
-              placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={renderTooltip}
-            >
-              <Accordion defaultActiveKey="" style={{ width: "60%" }} className='card-1' onClick={()=>setshow(!show)}>
-                <Accordion.Item eventKey="0" >
-                  <Accordion.Header>Welcome
-                    <span className='user-name'>{name.toUpperCase()}</span>
-                    you are now Admin side so please read your intructions 
-                    </Accordion.Header>
-                  <Accordion.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum.
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-              </OverlayTrigger>
-          </section> */}
           {/* tabs section dive  */}
           <section>
             <Tabs
@@ -181,7 +157,7 @@ function Home() {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <Tab eventKey="home" title="Home">
-                Tab content for Home
+                <Homecomponent />
               </Tab>
               <Tab eventKey="profile" title="ADD PROFILES">
                 <Selectteacherorstudent />
@@ -214,7 +190,7 @@ function Home() {
               style={{ display: "flex", justifyContent: "center" }}
             >
               <Tab eventKey="home" title="Home">
-                Tab content for Home
+                <Homecomponent />
               </Tab>
               <Tab onClick={() => handleStudentGet(localStorage.getItem("Pnrnumber"))} eventKey="viewprofile" title="VIEW INTERNAL MARKS">
                 <StudentInternalMarks

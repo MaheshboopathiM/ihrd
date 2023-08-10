@@ -33,7 +33,7 @@ function Selectteacherorstudent() {
                         <Card.Body>
                             <Card.Title>SELECT PROFILE</Card.Title>
                             <Card.Text>
-                                Please select which your you want to add
+                                Select Teacher Or Student
                             </Card.Text>
                             <Button variant="primary" onClick={() => setTeacher(!Teacher)}>TEACHERS</Button>
                             <Button variant='primary' onClick={() => setStudents(!Students)} style={{ marginLeft: '20px' }}>STUDENTS</Button>

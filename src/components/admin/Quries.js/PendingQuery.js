@@ -18,7 +18,7 @@ function PendingQuery({ role }) {
     const [show, setShow] = useState(false);
     const [reject, setreject] = useState(false);
 
-    const handleClose = () => {setShow(false);setmessageerror('')};
+    const handleClose = () => {setShow(false);setmessageerror('');setmsg('')};
     const handleShow = () =>{ setShow(true);setreject(true)};
     const handleShowReslove = () =>{ setShow(true);setreject(false)};
 
@@ -43,10 +43,10 @@ function PendingQuery({ role }) {
                     setQueryList(res.data.data.result)
                 })
         } else {
-            // axios.get(`${BASEURL}/Teacher/Query/${e}`)
-            //     .then((res) => {
-            //         setQueryList(res.data.data.result)
-            //     })
+            axios.get(`${BASEURL}/Admin/Teacher/Query`)
+                .then((res) => {
+                    setQueryList(res.data.data.result)
+                })
         }
 
     }
@@ -58,21 +58,88 @@ function PendingQuery({ role }) {
                     console.log("gdujfdhks")
                     setQueryone(res.data.data)
                 })
-        }// else if (permission) {
-        //     axios.get(`${BASEURL}/Teacher/Query/induvitual/${e}`)
-        //         .then((res) => {
-        //             console.log("gdujfdhks")
-        //             setQueryone(res.data.data)
-        //         })
-        // }
+        } else if (permission == 1) {
+            axios.get(`${BASEURL}/Teacher/Query/induvitual/${e}`)
+                .then((res) => {
+                    console.log("gdujfdhks")
+                    setQueryone(res.data.data)
+                })
+        }
 
     }
 
-    const handleSubmit = async() => {
+    const handleSubmit = async(e) => {
         if( validation()){
-
+            handleClose();
+            if(permission ==0){
+                if(e == 1){
+                    axios.post(`${BASEURL}/Admin/Student/Query/Edit`,{
+                        id:Qeryone.id,
+                        description:msg,
+                    }).then((res)=>{
+                        if(res.status == 200){
+                            alert(res.data.data.msg);
+                            setShow('')
+                            setQueryone('')
+                            handleQueryget();
+                        }
+                        if(res.status == 201){
+                            alert(res.data.data.msg)
+                        }
+                    })
+                }else{
+                    axios.post(`${BASEURL}/Admin/Student/Query/reject`,{
+                        id:Qeryone.id,
+                        description:msg,
+                    }).then((res)=>{
+                        if(res.status == 200){
+                            alert(res.data.data.msg);
+                            setShow('')
+                            setQueryone('')
+                            handleQueryget();
+                        }
+                        if(res.status == 201){
+                            alert(res.data.data.msg)
+                        }
+                    })
+                }
+            }else{
+                if(e == 1){
+                    axios.post(`${BASEURL}/Admin/Teacher/Query/Edit`,{
+                        id:Qeryone.id,
+                        description:msg,
+                    }).then((res)=>{
+                        if(res.status == 200){
+                            alert(res.data.data.msg);
+                            setShow('')
+                            setQueryone('')
+                            handleQueryget();
+                        }
+                        if(res.status == 201){
+                            alert(res.data.data.msg)
+                        }
+                    })
+                }else{
+                    axios.post(`${BASEURL}/Admin/Teacher/Query/reject`,{
+                        id:Qeryone.id,
+                        description:msg,
+                    }).then((res)=>{
+                        if(res.status == 200){
+                            alert(res.data.data.msg);
+                            setShow('')
+                            setQueryone('')
+                            handleQueryget();
+                        }
+                        if(res.status == 201){
+                            alert(res.data.data.msg)
+                        }
+                    })
+                }
+            }
         }
     }
+
+    
     useEffect(() => {
         handleQueryget();
     }, [])
@@ -91,7 +158,7 @@ function PendingQuery({ role }) {
                                         <>
                                             <div className='col-11 chatchildadmin' style={{ position: 'relative' }} onClick={() => handleviewQuery(data.id)}>
                                                 <span className='spanone'>
-                                                    {data.student_name}
+                                                   {permission == 0 ? data.student_name : data.teacher_name } 
                                                 </span>
                                                 <span className='chatarrow'>
                                                     <MDBIcon fas icon="arrow-circle-right" />
@@ -167,7 +234,7 @@ function PendingQuery({ role }) {
                             controlId="exampleForm.ControlTextarea1"
                         >
                             <Form.Label>{reject ? "Reason for reject the Query :" : "Reason for reslove the Query :"}</Form.Label>
-                            <Form.Control as="textarea" value={msg} onClick={(e)=>setmsg(e)} rows={10} cols={12} />
+                            <Form.Control as="textarea" value={msg} onChange={(e)=>setmsg(e.target.value)} rows={10} cols={12} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -178,7 +245,7 @@ function PendingQuery({ role }) {
                             <Button variant="secondary" onClick={handleClose}>
                                 Cancel
                             </Button>
-                            <Button variant="danger" onClick={handleClose}>
+                            <Button variant="danger" onClick={()=>handleSubmit(0)}>
                                 Confirm
                             </Button>
                         </>
@@ -187,7 +254,7 @@ function PendingQuery({ role }) {
                             <Button variant="warning" onClick={handleClose}>
                                 Cancel
                             </Button>
-                            <Button variant="primary" onClick={handleSubmit}>
+                            <Button variant="primary" onClick={()=>handleSubmit(1)}>
                                 Confirm
                             </Button>
                         </>

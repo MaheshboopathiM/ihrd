@@ -33,9 +33,8 @@ function InternalMarks() {
     const [semester, setsemester] = useState('');
     const [addsemester, setaddsemester] = useState('');
     const [Editsemester, setEditsemester] = useState('');
-    const [scrollableHeight, setScrollableHeight] = useState(0);
 
-    console.log(scrollableHeight)
+    console.log(studentdetail)
 
     const handleStudentGet = async () => {
         if (Pnrnumber) {
@@ -239,7 +238,7 @@ function InternalMarks() {
                 let subjectmarks;
                 subjectmarks = {
                     prnnumber: studentdetail.prnnumber,
-                    student_id: studentdetail.id,
+                    student_id: studentdetail.user_id,
                     department: studentdetail.deparment,
                     semester: addsemester.subject[i].semester,
                     subjectname: addsemester.subject[i].subject_name,
