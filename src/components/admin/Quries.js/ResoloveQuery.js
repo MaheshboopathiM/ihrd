@@ -131,11 +131,11 @@ function ResoloveQuery({role}) {
         <>
             <Container style={{ width: '100%' }}>
                 <Card className="text-center" style={{ display: "flex", justifyContent: "center", alignItems: 'center' }}>
-                    <Card.Header>Resolove Query List</Card.Header>
+                    <Card.Header>Reslove Query List</Card.Header>
                     <Card.Body className='border mb-4' style={{ display: "flex", justifyContent: "center", alignItems: 'center', minHeight: '400px', width: "70%" }} >
                         <>
                             <div className='col-6 chatparent'>
-                                <h1 className='chathead div-sticky-class'>Resolove Query`s</h1>
+                                <h1 className='chathead div-sticky-class'>Reslove Query`s</h1>
                                 {QueryList.length > 0 ?
 
                                     QueryList.map((data) => (
