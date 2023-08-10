@@ -45,7 +45,7 @@ function Teacherquery() {
           <Nav.Link onClick={handleNewQuery}>New Query</Nav.Link>
         </Nav.Item>
         <Nav.Item className={showM && 'border-botton'}>
-          <Nav.Link eventKey="link-1" onClick={hadleResloveQuery} >Reslolve Query</Nav.Link>
+          <Nav.Link eventKey="link-1" onClick={hadleResloveQuery} >Resolve Query</Nav.Link>
         </Nav.Item>
         <Nav.Item className={showB && 'border-botton'}>
           <Nav.Link eventKey="link-2" onClick={handlePendingQuery}>Pending Query</Nav.Link>
