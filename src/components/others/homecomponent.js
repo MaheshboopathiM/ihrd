@@ -137,7 +137,7 @@ function Homecomponent() {
                                             <h2 class="fs-6 text-light ">
                                             First week of June (Just after the publication of +2 results of Kerala Govt.)</h2><br /><br/>
                                             <a class="text-light link-info   text-decoration-none" href="#">
-                                                <h2 class="fs-5">M.Sc Computer Science</h2>
+                                                <h2 class="fs-5">B.com Computer Application</h2>
                                             </a>
                                         </div>
                                     </div>

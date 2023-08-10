@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './forget.css'
+// import './forget.css'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 import { BASEURL } from '../../BaseUrl/Baseurl';
